@@ -1,0 +1,234 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033\deflangfe1033{\fonttbl{\f0\fswiss\fprq2\fcharset204 Calibri;}{\f1\fswiss\fprq2\fcharset204{\*\fname Arial;}Arial CYR;}{\f2\fnil\fcharset0 Calibri;}{\f3\fswiss\fprq2\fcharset0 Calibri;}}
+{\colortbl ;\red0\green0\blue255;\red255\green255\blue255;\red0\green0\blue0;\red43\green145\blue175;}
+{\*\generator Riched20 6.3.9600}{\*\mmathPr\mdispDef1\mwrapIndent1440 }\viewkind4\uc1 
+\pard\nowidctlpar\sa200\sl276\slmult1\b\f0\fs32\lang1026 Changelog info\ul\i\fs22\par
+\ulnone\i0\f1\fs24 08.07.2014\par
+Angel \ul\fs22\par
+\ulnone\b0\fs24 created class Render to display the game content\par
+added folder Interfaces to store the game object interfaces\par
+added IRender interface\par
+added ToString() method to PlayField class\par
+added interface IGameObject, so it can be inherited by all objects in the game. This way we can keep all objects in a list of IGameObject type\par
+created List<IGameObject> in the Engin.Run() so it can keep all game objects\par
+added the instance of field in the created List<IGameObject> \par
+placed mines in the created field using the defined method\par
+created Render object in Engine.Run()\par
+uncomment the line \cf1\highlight2 this\cf3 .playfield[i, j] = \cf1 new\cf3  \cf4 Cell ..... \cf0 in InitilizeEmptyFiled() in the Playfield class line 44. \highlight0 added \cf4\highlight2 CellTypes\cf3 .EmptyCell parameter in the in the new Cell constructor to create field with empty celss\par
+\cf0\highlight0 edited  Cell class line 88. Changed \cf1\highlight2 return\cf3  ((\cf1 int\cf3 )\cf1 this\cf3 .CellView).ToString(); to \cf1 return\cf3  ((\cf1 char\cf3 )\cf1 this\cf3 .CellView).ToString(); so the correct symbol for the cells is displayed\par
+created class RandomGenerator, because the Random in class Cell line 20 always returned the same number. The instances of Random class were too close in time next to each other, so when the field was created it was always filled with the same numbers for bombs. \par
+changed all instances of Random.Next() in Field.PlaceMines() with RandomGenerator.GetNumber()\par
+changed the name of class Interfaces to ICell and moved it to the Interfaces folder\par
+
+\pard\sa200\sl276\slmult1\cf0\highlight0\f2\fs22\lang9 10.07.2014\par
+\b Georgi Neikov\b0\par
+Added key events to Engine class, refactored it abit. \par
+To subscribe for an event, use Engine.AddArrowKeyPressedHandler(...)\par
+Added new class KeyEventArgs to be used with the new events, main purpose is to pass info to event subscribers what key was pressed, may be extended to hold more data about the event.\par
+Fix on KeyEventArgs class. Added a property for the pressedKey field\par
+\b Yanko Tsigularov\par
+\b0 IEnumerable implementation added in Field.cs\par
+\b Angel Dimitrov\par
+\b0 Added CellFactory.cs, which implements Flyweight and Factory patternsat the same time. Not possible to use Flyweight for bombs, so made a workaround in CellFactory.cs\par
+\par
+11.07.2014\par
+\b Yanko Tsigularov\b0\par
+SaveLoadInterface uploaded\par
+SaveLoadInterface.cs uploaded\par
+Serialization of Save/Load states\par
+Memento classes added, not completed yet\par
+Memento Field added, not serialized yet\par
+Cell.Clone() implemented\par
+Cell.Clone() method fixed\par
+\par
+\b Georgi Neikov\b0\par
+Changes to Engine, fixed old events because they were kind of useles\par
+ New events will be used mainly by the renderer to refresh state.\par
+Now the Gameloop is started with Engine.Start()\par
+Engine is initialized in Engine.Initialize(), this should be the place to load any previously started games, basically restore state from file.\par
+Extracted methods out of Engine.Run()\par
+Moved the singleton construct from BattleFieldMain class to Engine.\par
+More small changes.\par
+Changes to ICell interface, added position properties.\par
+Changes to Cell, implemented the new properties from above.\par
+Changes to PlayField, added a [,] indexer property for accessing ICell members at positions (X,Y).\par
+!!! CellFactory class should fill the X,Y properties when a new ICell object is created.\par
+\par
+12.07.2014\par
+\par
+\b Tanya Petkova\par
+\b0 Player class uploaded\par
+Battlefield.csproj update\par
+\par
+\b Georgi Neikov\par
+\b0 Switched the class to be used as Renderer\par
+Moved Cell related clased to separate namespace.\par
+ViewCells classes describe the way ICells are being displayed on the console. (Look Draw() methods);\par
+RendererConsoleRenderer and Renderer base class generate and bind ViewCell objects to the contents of the current playfield\par
+\par
+\b Hristo Merdjanov\par
+\b0 Added Sounds class and resources, initialized it in the engine, when handling the events we can use that instance to play two types of sounds, one for an invalid move and the one for an exploded bomb\par
+\par
+\b Angel Dimitrov\par
+\b0 Used StyleCope on BlownCell, BombCell, Cell, CellFactory. Only one error left, but I can't understand me. Might be because the project is modified on different versions of VS\par
+\par
+14.07.2014\par
+\par
+\b Yanko Tsigularov\par
+\b0 Compilation error in BombCell.cs fixed ( static constants )\par
+Comments added in MemetoField, SaveLoadInterface, PlayField\par
+Throwing expections added in Field.cs\par
+PlayField and MementoField Unit tests added\par
+InitializeEmptyField fixes...\par
+MementoPlayer Implemented, Player.cs small changes\par
+\par
+15.07.2014\par
+\par
+\b Yanko Tsigularov\par
+\b0 Comments added in MemetoField, SaveLoadInterface, PlayField\par
+XML Seriazlization fixes\par
+Enigine->HandleExplosion bug fixes\par
+\par
+\b Angel Dimitrov\par
+\b0 Added pointer, which will be used by the player to choose a cell.\par
+ Modified Enter pressed key event to pick the current cell.\par
+ Added method for drawing pointer in rendere\par
+Bombs now displayed with corresponding numbers. \par
+Fixed cursor view in Renderer class\par
+Tried to implement cell explosion. Georgi has added some events, but can't figure out how do they work. Still not implemented the functionality\par
+Added ChangeCellView in Renderer.cs in order to update the cell view when we have explosion with bomb of 1. Doesn't work properly. Has bugs with displaying the blown cells\par
+\par
+\b Hristo Merdjanov\par
+\b0 Called SoundsPlayer instance OnEnterKeyPressed\par
+Added methods for drawing blown cells\par
+\par
+16.07.2014\par
+\par
+\b Tanya Petkova\par
+\b0 Player Unit Test added\par
+Small fix in PlayerTest.cs\par
+\par
+\b Yanko Tsigularov\par
+\b0 Save/Load Functionallity added in Engine -> F5 - SaveGame, F6 - LoadGame. After loading screen is not refreshed yet\par
+SaveLoad fixes\par
+\par
+\b Georgi Neikov\par
+\b0 Changes to Engine and Renderer classes. Now the cells are automatically redrawed when a bomb gets blown\par
+\par
+\b Hristo Merdjanov\b0\par
+Added sound OnDirectionKeyPressed event\par
+\par
+\par
+17.07.2014\par
+\par
+\b Tanya Petkova\par
+\b0 Added new Unit Test for Player.cs\par
+\par
+18.07.2014\par
+\par
+\b Angel Dimitrov\par
+\b0 Added minor UI changes. Field draws with different colors in order to visualize different cells better. Changed cell colors, because probably we will need more contrast colors for the presentation in order to be visible. \par
+Changed the way blown cells are displayed. \par
+Added some unit tests. Added 2 test to fieldtest and added new unit test class for pointer tests\par
+\par
+19.07.2014\par
+\par
+\b Hristo Merdjanov\par
+\b0 Tests for Sounds Class\par
+\par
+20.07.2014\par
+\par
+\b Hristo Merdjanov\par
+\b0 Small fixes and some more tests, Memento player tested\par
+Added tests for the cells, SaveLoadAPI and RandomGenerator class.\par
+\par
+\b Yanko Tsigularov\par
+\b0 Startup menu added, load game fixes done\par
+Game Logo Added\par
+Game End Added, Scoring Added, Save/Load Messages fixed\par
+\par
+21.07.2014\par
+\b\par
+Angel Dimitrov\par
+\b0 Fixed bug with displaying field when odd user input odd number\par
+Added a few unit tests and deleted some useless classes in the project, which are not used any more\b\par
+\b0\par
+22.07.2014\par
+\b\par
+Angel Dimitrov\par
+\b0 Added a few startscreen tests\par
+Added startscreen tests for all keys scenarios\par
+Workaround for testing starscreen SetChoise(). Changed the method so it accepts ConsoleKey parameter, so can test if the method is trigerred when certain key is passed\par
+KeyEventsTests added\par
+CellEventArgs tests added and CellEventsRegion tests added\par
+Added EngineTests.cs, however for some reason they don't increase thetest coverage although they use methods and variables from Engine class. Needs to find a fix\par
+\par
+\b Yanko Tsigularov\par
+\b0 UnitTest Workarounds: getEngineInstance fixed, setChoise() problem fixed\par
+StyleCop : BlownCell.cs BombCell.cs\par
+StyleCop : Cell.cs\par
+StyleCop: CellFactory, CellType, EmptyCell, ICell\par
+StyleCop: ConsoleView.cs\par
+StyleCop: ICellView.cs\par
+\par
+\b Tanya Petkova\b0\par
+Added PlayfieldChangedEventArgs Test\par
+\par
+23.07.2014\par
+\par
+\b Hristo Merdjanov\par
+\b0 1 fixed test, some comments and a help file are added\par
+\par
+\b Yanko Tsigularov\par
+\b0 StyleCop : StartScreen\par
+\par
+\par
+25.07.2014\par
+\par
+\b Angel Dimitrov\par
+\b0\par
+
+\pard\nowidctlpar\sa200\sl276\slmult1\f0\lang1026 huuuskyyy\par
+\f3\lang1033 Added \f0\lang1026 EngineTests for exploding cells\f3\lang1033 . Doesn't work properly, needs fix\f0\lang1026\par
+Moved EngineTests.cs to different Unit test project containing only EngineTests. Now all tests pass and code coverage gets increased. \par
+Now the engine tests seems to be working an to increase test coverageHowever now all playfield tests failed. This is because engine tests code for quit game and this engine state is trasferred to playfield tests. Need to investigate and find a workaround or just ignore quit game tests\par
+\par
+
+\pard\sa200\sl276\slmult1\f2\lang9 26.07.2014\par
+\par
+\b Angel Dimitrov\par
+
+\pard\nowidctlpar\sa200\sl276\slmult1\b0\f0\lang1026\par
+StyleCop to GameEngine folder\par
+Added Engine Tests for several bomb sizes. Added test for Game Over\par
+Added more Engin tests for Bombs with different sizes, placed on different locations. Added test for Game Over\par
+\par
+ \b Tanya\f3\lang1033  \f0\lang1026 Petkova\b0\par
+StyleCop: Player.cs Pointer.cs\par
+\par
+ \b\f2\lang9 Hristo Merdjanov\b0\f0\lang1026\par
+A few more tests and updated documentation added\par
+\par
+ \b Yanko Tsigularov\b0\par
+TestIfOnDirectionKeyPressed bug fixed, code coverage 79.5%\par
+Game Engine Unit Tests added. Current code coverage 78.55%\par
+\par
+ \b\f3\lang1033 Georgi Neikov\b0\f0\lang1026\par
+Added documentation to Renderer, moved some methods to ConsoleRenderer, others made virtual and abstract, generally moved everything related to concrete implementations of Renderer to ConsoleRenderer\par
+\par
+\f2\lang9 28.07.2014\f0\lang1026\par
+\par
+\b\f2\lang9 Hristo Merdjanov\b0\f0\lang1026\par
+Documentation is updated\par
+\par
+ \b Yanko Tsigularov\b0\par
+Unit test game engine fixes\par
+\par
+ \b\f3\lang1033 Georgi Neikov\b0\f0\lang1026\par
+StyleCop: ConsoleRenderer and Renderer. Introduced some properties totake down the warnings.\par
+\par
+\f3\lang1033 29.07.2014\par
+\par
+\b Angel Dimitrov\par
+\b0 Added presentation to the project and updated the battlefield class diagram\f0\lang1026\par
+}
+ 
